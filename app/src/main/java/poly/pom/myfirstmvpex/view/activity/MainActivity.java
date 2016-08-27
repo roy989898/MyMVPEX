@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(new UserFragment(),"1");
+        transaction.add(R.id.fragment_container,new UserFragment());
         transaction.commit();
     }
 }

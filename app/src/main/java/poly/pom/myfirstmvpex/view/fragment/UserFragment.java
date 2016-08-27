@@ -18,14 +18,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import poly.pom.myfirstmvpex.MyApplication;
 import poly.pom.myfirstmvpex.R;
-import poly.pom.myfirstmvpex.view.userview;
+import poly.pom.myfirstmvpex.presentation.UserPresenter;
+import poly.pom.myfirstmvpex.view.Userview;
 
 
-public class UserFragment extends Fragment implements userview {
+public class UserFragment extends Fragment implements Userview {
     @BindView(R.id.ed_userName)
     EditText edUserName;
     @BindView(R.id.bt_save)
     Button btSave;
+    @Inject
+    UserPresenter presenter;
 
     @Inject
     Context context;
@@ -34,12 +37,23 @@ public class UserFragment extends Fragment implements userview {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.pause();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((MyApplication)( getActivity().getApplication())).getAppComponent().inject(this);
+        ((MyApplication) (getActivity().getApplication())).getAppComponent().inject(this);
         if (getArguments() != null) {
 
         }
@@ -51,18 +65,28 @@ public class UserFragment extends Fragment implements userview {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
+
+        presenter.setView(this);
         return view;
     }
 
     @OnClick(R.id.bt_save)
     public void onClick() {
+        presenter.saveUser();
+
     }
 
     //Contract
     @Override
     public String getUserName() {
-        return null;
+        return edUserName.getText().toString();
     }
+
+    @Override
+    public void displayUserName(String name) {
+        edUserName.setText(name);
+    }
+
 
     @Override
     public void showSuccessToast() {
@@ -76,6 +100,6 @@ public class UserFragment extends Fragment implements userview {
 
     @Override
     public void showUserName(String name) {
-
+        edUserName.setText(name);
     }
 }

@@ -12,5 +12,5 @@ import poly.pom.myfirstmvpex.view.fragment.UserFragment;
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(UserFragment target);
-//    void inject(MyApplication target);
+
 }
