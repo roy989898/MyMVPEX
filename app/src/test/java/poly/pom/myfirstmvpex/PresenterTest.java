@@ -43,6 +43,6 @@ public class PresenterTest {
     public void haveInterationWithViewWhensaveUser(){
         userPrestener.saveUser();
 //        verifyZeroInteractions();
-        verify(view,atLeastOnce());
+        verify(view,atLeastOnce()).showSuccessToast();
     }
 }
